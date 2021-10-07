@@ -28,25 +28,32 @@ namespace Pharmacy.Application.CompanyApp
         public Task Delete(int id)
         {
             var result = _companyRepository.GetByCompanyId(id);
+
             return _companyRepository.Delete(result.Result);
 
         }
 
         public async Task<List<CompanyDto>> GetAll()
         {
-            var result = await _companyRepository.GetAll();
+            var result = (await _companyRepository.GetAll()).OrderBy(x => x.CompanyId);
             return result.Adapt<List<CompanyDto>>();
         }
 
         public async Task<CompanyDto> GetById(int id)
         {
             var result = await _companyRepository.GetByCompanyId(id);
+            if (result == null)
+            {
+                throw new ApplicationException("Firma bulunamadi!");
+            }
             return result.Adapt<CompanyDto>();
 
         }
 
         public Task Update(CompanyDto companyDto)
         {
+            var result = GetById(companyDto.CompanyId);
+
             return _companyRepository.Update(companyDto.Adapt<Company>());
         }
 

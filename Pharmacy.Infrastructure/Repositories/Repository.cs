@@ -34,7 +34,7 @@ namespace Pharmacy.Infrastructure.Repositories
         }
 
         public virtual Task Delete(T entity)
-        {   
+        {
             _dbSet.Remove(entity);
             return _dbContext.SaveChangesAsync();
         }
@@ -48,7 +48,6 @@ namespace Pharmacy.Infrastructure.Repositories
         {
             return _dbSet.ToListAsync();
         }
-
 
     }
 }
