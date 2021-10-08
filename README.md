@@ -1,5 +1,7 @@
 # HomeWork2-CaglarDemir
-Hepsiburada Backend Bootcamp 2.Hafta Ödevi
+Hepsiburada Backend Bootcamp 3.Hafta Ödevi
+
+### **Daha tamamlanmadı. Tamamlanınca bu dosya güncellenecektir**
 
 Temel CRUD işlemleri ile ilaç kaydı yapılabilen bir resful Web-API projesi. **Swagger** desteği eklenmiştir. Database olarak EntityFramework ile oluşturulmuş bir database kullanılmıştır. Company nesnesi için hem **EntityFramework** hem **Dapper** repositorysi yazılmıştır. Sort ve list özellikleri için `System.Linq.Dynamic.Core` paketinin sorgularda `string` kullanabilme işlevi kullanılarak extension oluşturulmuştur. Dto mappinglerinde **Mapster** kullanılmıştır. **Serilog** ile konsola, `.txt` ve `.json` uzantılı dosyalara loglama yapmaktadır. DockerHub'a publish edilmiştir ancak içerisinde sadece uygulama mevcuttur, database dahil değildir. https://hub.docker.com/r/cagdem/pharmacyapi
 
