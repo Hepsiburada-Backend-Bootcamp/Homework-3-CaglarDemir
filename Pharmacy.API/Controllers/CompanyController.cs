@@ -23,28 +23,37 @@ namespace Pharmacy.API.Controllers
         public async Task<IActionResult> GetAll()
         {
             var result = await _companyService.GetAll();
-            return Ok(new { status = true, data = result, errors = "" });
+            if (result.Count > 0)
+            {
+                return Ok(result);
+
+            }
+            else
+            {
+                return NotFound("Firmalar bulunamadi!");
+            }
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
             var result = await _companyService.GetById(id);
-            return Ok(new { status = true, data = result, errors = "" });
+            return Ok(result);
         }
 
         [HttpPost]
         public IActionResult Add([FromBody] CompanyDto companyDto)
         {
             _companyService.Add(companyDto);
-            return Ok(new { status = true, errors = "" });
+
+            return Ok();
         }
 
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
             _companyService.Delete(id);
-            return Ok(new { status = true, errors = "" });
+            return Ok();
         }
 
         [HttpPut("{id}")]
@@ -52,7 +61,7 @@ namespace Pharmacy.API.Controllers
         {
             companyDto.CompanyId = id;
             _companyService.Update(companyDto);
-            return Ok(new { status = true, errors = "" });
+            return Ok();
         }
     }
 }
