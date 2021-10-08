@@ -15,11 +15,19 @@ namespace Pharmacy.Application
     {
         public static IServiceCollection AddApplicationModule(this IServiceCollection services, IConfiguration configuration)
         {
+            services.AddInfrastructureModuleDb(configuration);
             services.AddInfrastructureModule(configuration);
             services.AddScoped<ICompanyService, CompanyService>();
             services.AddScoped<IMedicineService, MedicineService>();
             return services;
         }
-
+        public static IServiceCollection AddApplicationModuleTest(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.AddInfrastructureModuleDbTest(configuration);
+            services.AddInfrastructureModule(configuration);
+            services.AddScoped<ICompanyService, CompanyService>();
+            services.AddScoped<IMedicineService, MedicineService>();
+            return services;
+        }
     }
 }
