@@ -1,7 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Pharmacy.Infrastructure.Migrations.EFPharmacy
 {
+    [ExcludeFromCodeCoverage]
     public partial class Init2 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)

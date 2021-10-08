@@ -16,8 +16,7 @@ namespace Pharmacy.Application.MedicineApp
 
         private readonly TypeAdapterSetter _configToMedicineDto = TypeAdapterConfig<(Company, Medicine), MedicineDto>.NewConfig()
                 .Map(d => d, s => s.Item2)
-                .Map(d => d.CompanyName, s => s.Item1.CompanyName)
-;
+                .Map(d => d.CompanyName, s => s.Item1.CompanyName);
 
         private readonly TypeAdapterSetter _configToMedicine = TypeAdapterConfig<(Company, MedicineDto), Medicine>.NewConfig()
                 .Map(d => d, s => s.Item2)
@@ -33,7 +32,14 @@ namespace Pharmacy.Application.MedicineApp
         public Task Add(MedicineDto medicineDto)
         {
             var result = _companyRepository.Get(c => c.CompanyName == medicineDto.CompanyName);
+
+            if (result.Result == null)
+            {
+                throw new ApplicationException("Firma bulunamadi!");
+            }
+
             Company company = result.Result.ElementAt(0);
+
             Medicine data = (company, medicineDto).Adapt<Medicine>(_configToMedicine.Config);
 
             return _medicineRepository.Add(data);
@@ -59,17 +65,29 @@ namespace Pharmacy.Application.MedicineApp
 
         public async Task<MedicineDto> GetById(int id)
         {
-            var result = await _medicineRepository.GetByMedicineId(id);
+            var medicine = await _medicineRepository.GetByMedicineId(id);
+            if (medicine == null)
+            {
+                throw new ApplicationException("İlaç bulunamadi!");
+            }
 
-            var deneme = (result.Company, result).Adapt<MedicineDto>(_configToMedicineDto.Config);
-            return deneme;
+            var result = (medicine.Company, medicine).Adapt<MedicineDto>(_configToMedicineDto.Config);
+            return result;
 
         }
 
         public Task Update(MedicineDto medicineDto)
         {
             var result = _companyRepository.Get(c => c.CompanyName == medicineDto.CompanyName);
+            var medicine = _medicineRepository.GetByMedicineId(medicineDto.MedicineId);
+            
+            if (result.Result == null)
+            {
+                throw new ApplicationException("Firma bulunamadi!");
+            }
+
             Company company = result.Result.ElementAt(0);
+
             Medicine data = (company, medicineDto).Adapt<Medicine>(_configToMedicine.Config);
 
             return _medicineRepository.Update(data);

@@ -24,8 +24,8 @@ namespace Pharmacy.Infrastructure
                 ,b =>b.MigrationsAssembly(Assembly.GetExecutingAssembly().FullName))); // migration sırasında problem çıkmaması için derste eklenmişti.
 
             services.AddScoped<IMedicineRepository, EFMedicineRepository>();
-            //services.AddScoped<ICompanyRepository, EFCompanyRepository>();
-            services.AddScoped<ICompanyRepository, DapperCompanyRepository>();
+            services.AddScoped<ICompanyRepository, EFCompanyRepository>();
+            //services.AddScoped<ICompanyRepository, DapperCompanyRepository>();
 
             return services;
         }
