@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq.Expressions;
+using Pharmacy.Domain.Entities;
 
 namespace Pharmacy.Application.CompanyApp
 {
@@ -12,6 +13,8 @@ namespace Pharmacy.Application.CompanyApp
         Task<List<CompanyDto>> GetAll();
         Task Delete(int id);
         Task Update(CompanyDto companyDto);
+
+        Task<Company> GetCompany(int id);
 
     }
 }

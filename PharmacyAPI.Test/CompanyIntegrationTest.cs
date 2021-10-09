@@ -14,85 +14,85 @@ namespace PharmacyAPI.Test
 {
     public class CompanyIntegrationTest : IClassFixture<PharmacyApiFactory>
     {
-        private readonly WebApplicationFactory<TestStartup> _factory;
+        //private readonly WebApplicationFactory<TestStartup> _factory;
 
-        public CompanyIntegrationTest(PharmacyApiFactory factory)
-        {
-            _factory = factory;
-        }
-
-
-        [Fact]
-        public async Task Post_Should_Return_Fail_With_Error_Response_When_Insert_CompanyName_Is_Empty()
-        {
-            //Arrange
-
-            var company = new CompanyDto { CompanyName = string.Empty };
-
-            var json = JsonSerializer.Serialize(company);
-
-            //var client = _factory.CreateClient(new WebApplicationFactoryClientOptions { BaseAddress=new System.Uri( "http://localhost:44381" ) });
-
-            var client = _factory.CreateClient();
-
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
+        //public CompanyIntegrationTest(PharmacyApiFactory factory)
+        //{
+        //    _factory = factory;
+        //}
 
 
-            //Act
+        //[Fact]
+        //public async Task Post_Should_Return_Fail_With_Error_Response_When_Insert_CompanyName_Is_Empty()
+        //{
+        //    //Arrange
 
-            var response = await client.PostAsync("api/v1/firmalar", content);
+        //    var company = new CompanyDto { CompanyName = string.Empty };
 
-            var actualStatusCode = response.StatusCode;
+        //    var json = JsonSerializer.Serialize(company);
 
-            //Assert
+        //    //var client = _factory.CreateClient(new WebApplicationFactoryClientOptions { BaseAddress=new System.Uri( "http://localhost:44381" ) });
 
-            Assert.Equal(HttpStatusCode.BadRequest, actualStatusCode);
-        }
+        //    var client = _factory.CreateClient();
 
-        [Fact]
-        public async Task Post_Should_Return_Success_With_CompanyId_Response()
-        {
-            //Arrange
-
-            var company = new CompanyDto { CompanyName = "Test Company" };
-
-            var json = JsonSerializer.Serialize(company);
-
-            var client = _factory.CreateClient();
-
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
+        //    var content = new StringContent(json, Encoding.UTF8, "application/json");
 
 
-            //Act
+        //    //Act
 
-            var response = await client.PostAsync("api/v1/firmalar", content); //Post response
+        //    var response = await client.PostAsync("api/v1/firmalar", content);
 
-            //Assert
+        //    var actualStatusCode = response.StatusCode;
 
-            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        //    //Assert
 
-            var resultData = await response.Content.ReadAsStringAsync();
+        //    Assert.Equal(HttpStatusCode.BadRequest, actualStatusCode);
+        //}
 
-            var okResult = JsonSerializer.Deserialize<dynamic>(resultData);
+        //[Fact]
+        //public async Task Post_Should_Return_Success_With_CompanyId_Response()
+        //{
+        //    //Arrange
 
-            Assert.True(okResult.GetProperty("status").GetBoolean());
+        //    var company = new CompanyDto { CompanyName = "Test Company" };
 
-            var responseGetAll = await client.GetAsync("api/v1/firmalar");
+        //    var json = JsonSerializer.Serialize(company);
 
-            responseGetAll.EnsureSuccessStatusCode();
+        //    var client = _factory.CreateClient();
 
-            var companyListData = await responseGetAll.Content.ReadAsStringAsync();
+        //    var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-            var companyListDataJsonElement = JsonSerializer.Deserialize<JsonElement>(companyListData);
 
-            var companyList = JsonSerializer.Deserialize<List<CompanyDto>>(companyListDataJsonElement.GetProperty("data").GetRawText());
+        //    //Act
 
-            Assert.NotNull(companyList);
-            Assert.NotEmpty(companyList);
+        //    var response = await client.PostAsync("api/v1/firmalar", content); //Post response
 
-            var lastCompany = companyList.Last();
+        //    //Assert
 
-            Assert.Equal(company.CompanyName, lastCompany.CompanyName);
-        }
+        //    Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+
+        //    var resultData = await response.Content.ReadAsStringAsync();
+
+        //    var okResult = JsonSerializer.Deserialize<dynamic>(resultData);
+
+        //    Assert.True(okResult.GetProperty("status").GetBoolean());
+
+        //    var responseGetAll = await client.GetAsync("api/v1/firmalar");
+
+        //    responseGetAll.EnsureSuccessStatusCode();
+
+        //    var companyListData = await responseGetAll.Content.ReadAsStringAsync();
+
+        //    var companyListDataJsonElement = JsonSerializer.Deserialize<JsonElement>(companyListData);
+
+        //    var companyList = JsonSerializer.Deserialize<List<CompanyDto>>(companyListDataJsonElement.GetProperty("data").GetRawText());
+
+        //    Assert.NotNull(companyList);
+        //    Assert.NotEmpty(companyList);
+
+        //    var lastCompany = companyList.Last();
+
+        //    Assert.Equal(company.CompanyName, lastCompany.CompanyName);
+        //}
     }
 }

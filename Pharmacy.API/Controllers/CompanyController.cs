@@ -38,7 +38,9 @@ namespace Pharmacy.API.Controllers
         public async Task<IActionResult> Get(int id)
         {
             var result = await _companyService.GetById(id);
+
             return Ok(result);
+
         }
 
         [HttpPost]
