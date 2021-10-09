@@ -57,17 +57,22 @@ namespace PharmacyAPI.Controllers
         }
 
         [HttpGet]
-        [Route("[action]")] //  api/v1/ilaclar/List?list=Company="Y"
+        [Route("[action]")] //  api/v1/ilaclar/List?list=CompanyName="Y"
         public async Task<IActionResult> List([FromQuery] string list)
         {
             var result = await _medicineService.GetAll();
             var data = result.AsQueryable();
             data = data.FilterSource(list);
-            return Ok(new { status = true, data = data, errors = "" });
+            var dataList = data.ToList();
+            if (dataList.Count == 0)
+            {
+                return NotFound("İstenilen kriterlere uygun ilaç bulunamadı!");
+            }
+            return Ok(data.ToList());
         }
 
         [HttpGet]
-        [Route("[action]")] // /api/v1/ilaclar/Sort?sort=name
+        [Route("[action]")] //  api/v1/ilaclar/Sort?sort=name
         public async Task<IActionResult> Sort([FromQuery] string sort)
         {
             var result = await _medicineService.GetAll();

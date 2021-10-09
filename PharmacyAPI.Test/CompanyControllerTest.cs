@@ -16,7 +16,7 @@ namespace PharmacyAPI.Test
     public class CompanyControllerTest
     {
         [Fact]
-        public async void GetCompanyList_Return_Ok_Companies()
+        public async void GetAll_Return_Ok_Companies()
         {
             //Arrange
             List<CompanyDto> list = GetCompanies();
