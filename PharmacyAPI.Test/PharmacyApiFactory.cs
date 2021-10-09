@@ -13,14 +13,14 @@ namespace PharmacyAPI.Test
 {
     public class PharmacyApiFactory : WebApplicationFactory<TestStartup>
     {
-        protected override void ConfigureWebHost(IWebHostBuilder builder)
-        {
-            builder.ConfigureServices(services =>
-            {
-                var context = services.SingleOrDefault(s => s.ServiceType == typeof(DbContextOptions<PharmacyDbContext>));
-                services.Remove(context);
-            });
-        }
+        //protected override void ConfigureWebHost(IWebHostBuilder builder)
+        //{
+        //    builder.ConfigureServices(services =>
+        //    {
+        //        var context = services.SingleOrDefault(s => s.ServiceType == typeof(DbContextOptions<PharmacyDbContext>));
+        //        services.Remove(context);
+        //    });
+        //}
 
         protected override IHostBuilder CreateHostBuilder()
         {
