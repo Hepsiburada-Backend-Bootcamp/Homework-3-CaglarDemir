@@ -114,9 +114,10 @@ namespace PharmacyAPI.Test
             var controller = new CompanyController(mockService.Object);
 
             //Act
-            controller.Add(GetCompanies()[0]);
+            var result = controller.Add(GetCompanies()[0]);
 
             //Assert
+            Assert.IsType<OkResult>(result);
             mockService.Verify(x => x.Add(It.IsAny<CompanyDto>()), Times.Once);
 
         }

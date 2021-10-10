@@ -27,14 +27,14 @@ namespace PharmacyAPI.Controllers
         public IActionResult Add([FromBody] MedicineDto medicineDto)
         {
             _medicineService.Add(medicineDto);
-            return Ok(new { status = true, errors = "" });
+            return Ok();
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
             var result = await _medicineService.GetById(id);
-            return Ok(new { status = true, data = result, errors = "" });
+            return Ok(result);
 
         }
 
@@ -44,7 +44,7 @@ namespace PharmacyAPI.Controllers
         {
             medicineDto.MedicineId = id;
             _medicineService.Update(medicineDto);
-            return Ok(new { status = true, errors = "" });
+            return Ok();
 
         }
 
@@ -52,7 +52,7 @@ namespace PharmacyAPI.Controllers
         public IActionResult Delete(int id)
         {
             _medicineService.Delete(id);
-            return Ok(new { status = true, errors = "" });
+            return Ok();
 
         }
 
@@ -68,7 +68,7 @@ namespace PharmacyAPI.Controllers
             {
                 return NotFound("İstenilen kriterlere uygun ilaç bulunamadı!");
             }
-            return Ok(data.ToList());
+            return Ok(dataList);
         }
 
         [HttpGet]
@@ -78,7 +78,8 @@ namespace PharmacyAPI.Controllers
             var result = await _medicineService.GetAll();
             var data = result.AsQueryable();
             data = data.SortSource(sort);
-            return Ok(new { status = true, data = data, errors = "" });
+
+            return Ok(data.ToList());
 
         }
 
