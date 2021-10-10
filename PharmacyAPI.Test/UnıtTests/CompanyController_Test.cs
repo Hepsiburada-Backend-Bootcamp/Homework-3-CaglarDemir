@@ -13,7 +13,7 @@ using Xunit;
 
 namespace PharmacyAPI.Test
 {
-    public class CompanyControllerTest
+    public class CompanyController_Test
     {
         [Fact]
         public async void GetAll_Return_Ok_Companies()

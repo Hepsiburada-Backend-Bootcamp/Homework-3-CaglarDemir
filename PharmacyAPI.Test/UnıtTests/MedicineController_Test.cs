@@ -11,7 +11,7 @@ using Xunit;
 
 namespace PharmacyAPI.Test
 {
-    public class MedicineControllerTest
+    public class MedicineController_Test
     {
         [Fact]
         public async void List_Return_Ok_MedicineDto()
