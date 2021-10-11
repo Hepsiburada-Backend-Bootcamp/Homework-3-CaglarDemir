@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
@@ -14,6 +15,7 @@ using System.Threading.Tasks;
 
 namespace Pharmacy.Infrastructure.Repositories.DapperRepositories
 {
+    [ExcludeFromCodeCoverage]
     public class DapperCompanyRepository : Repository<Company>, ICompanyRepository
     {
         private IDbConnection db;

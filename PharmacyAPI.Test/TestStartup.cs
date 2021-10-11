@@ -45,7 +45,7 @@ namespace PharmacyAPI.Test
                 context.Companies.Add(company);
                 context.SaveChanges();
 
-                for (int j = 0; i < 20; i++)
+                for (int j = 0; j < 20; j++)
                 {
                     Medicine medicine = new();
                     medicine.CompanyId = company.CompanyId;

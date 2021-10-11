@@ -27,15 +27,11 @@ namespace PharmacyAPI.Test
         {
             //Arrange
 
-            var company = new CompanyDto { CompanyName = string.Empty };
-
-            var json = JsonSerializer.Serialize(company);
-
-            //var client = _factory.CreateClient(new WebApplicationFactoryClientOptions { BaseAddress=new System.Uri( "http://localhost:44381" ) });
-
             var client = _factory.CreateClient();
 
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var company = new CompanyDto { CompanyName = string.Empty };
+
+            var content = ContentCreator(company);
 
 
             //Act
@@ -50,49 +46,55 @@ namespace PharmacyAPI.Test
         }
 
         [Fact]
-        public async Task Post_Should_Return_Success_With_CompanyId_Response()
+        public async Task Post_Return_Ok_When_CompanyNameIsNotEmpty()
         {
             //Arrange
 
-            var company = new CompanyDto { CompanyName = "Test Company" };
-
-            var json = JsonSerializer.Serialize(company);
-
             var client = _factory.CreateClient();
-
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
-
+            var company = new CompanyDto { CompanyName = "IntegrationTest" };
+            var content = ContentCreator(company);
 
             //Act
 
-            var response = await client.PostAsync("api/v1/firmalar", content); //Post response
+            var response = await client.PostAsync("api/v1/firmalar", content);
+            var actualStatusCode = response.StatusCode;
 
             //Assert
 
-            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.Equal(HttpStatusCode.OK, actualStatusCode);
 
-            var resultData = await response.Content.ReadAsStringAsync();
-
-            var okResult = JsonSerializer.Deserialize<dynamic>(resultData);
-
-            Assert.True(okResult.GetProperty("status").GetBoolean());
-
-            var responseGetAll = await client.GetAsync("api/v1/firmalar");
-
-            responseGetAll.EnsureSuccessStatusCode();
-
-            var companyListData = await responseGetAll.Content.ReadAsStringAsync();
-
-            var companyListDataJsonElement = JsonSerializer.Deserialize<JsonElement>(companyListData);
-
-            var companyList = JsonSerializer.Deserialize<List<CompanyDto>>(companyListDataJsonElement.GetProperty("data").GetRawText());
-
-            Assert.NotNull(companyList);
-            Assert.NotEmpty(companyList);
-
-            var lastCompany = companyList.Last();
-
-            Assert.Equal(company.CompanyName, lastCompany.CompanyName);
         }
+
+        [Fact]
+        public async Task Delete_Return_NotFound_When_CompanyIsNotFound()
+        {
+            //Arrange
+
+            var client = _factory.CreateClient();
+
+            //Act
+            var listResponse = await client.GetAsync("api/v1/firmalar");
+
+            var listJson = await listResponse.Content.ReadAsStringAsync();
+            var companyList = JsonSerializer.Deserialize<List<CompanyDto>>(listJson);
+
+            var responseDelete = await client.DeleteAsync($"api/v1/firmalar/{companyList.Count + 1}");
+            var actualStatusCode = responseDelete.StatusCode;
+
+            //Assert
+
+            Assert.Equal(HttpStatusCode.NotFound, actualStatusCode);
+
+        }
+
+
+
+
+        private StringContent ContentCreator(object obj)
+        {
+            var json = JsonSerializer.Serialize(obj);
+            return new StringContent(json, Encoding.UTF8, "application/json");
+        }
+
     }
 }
