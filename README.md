@@ -1,9 +1,21 @@
 # HomeWork3-CaglarDemir
 Hepsiburada Backend Bootcamp 3.Hafta Ödevi
 
-### **Daha tamamlanmadı. Tamamlanınca bu dosya güncellenecektir**
-
 Temel CRUD işlemleri ile ilaç kaydı yapılabilen bir resful Web-API projesi. **Swagger** desteği eklenmiştir. Database olarak EntityFramework ile oluşturulmuş bir database kullanılmıştır. Company nesnesi için hem **EntityFramework** hem **Dapper** repositorysi yazılmıştır. Sort ve list özellikleri için `System.Linq.Dynamic.Core` paketinin sorgularda `string` kullanabilme işlevi kullanılarak extension oluşturulmuştur. Dto mappinglerinde **Mapster** kullanılmıştır. **Serilog** ile konsola, `.txt` ve `.json` uzantılı dosyalara loglama yapmaktadır. DockerHub'a publish edilmiştir ancak içerisinde sadece uygulama mevcuttur, database dahil değildir. https://hub.docker.com/r/cagdem/pharmacyapi
+
+Servislerin ve Controller'ların unit testleri **Xunit** ve **Moq** kullanılarak yapıldı. Sonuçlara göre bazı refactoringler yapıldı. Tamamlanması gereken refactoringler mevcut. Integration test için **in-memory** database kullanıldı. Code coverage için **Coverlet** ve **Fine Code Coverage** toolları kullanıldı.
+
+Yapılan testler:
+
+![image](https://user-images.githubusercontent.com/15106912/136807303-84cfc679-62fd-4dbc-a699-65e8f27a2f67.png)
+
+Code Coverage Özeti:
+
+![image](https://user-images.githubusercontent.com/15106912/136807432-71ca07a7-3ca4-42f3-810b-3495a4e751c0.png)
+
+Code Coverage:
+
+![image](https://user-images.githubusercontent.com/15106912/136807365-28c5895b-389c-479d-a67c-33971ed91332.png)
 
 Database view:
 
