@@ -15,10 +15,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Serilog;
-
+using System.Diagnostics.CodeAnalysis;
 
 namespace PharmacyAPI
 {
+    [ExcludeFromCodeCoverage]
     public class Startup
     {
         public Startup(IConfiguration configuration)
@@ -29,7 +30,7 @@ namespace PharmacyAPI
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        public virtual void ConfigureServices(IServiceCollection services)
         {
 
             services.AddApplicationModule(Configuration);
@@ -41,7 +42,7 @@ namespace PharmacyAPI
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public virtual void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -49,7 +50,12 @@ namespace PharmacyAPI
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "PharmacyAPI v1"));
             }
-            app.UseSerilogRequestLogging();
+
+            if (!env.IsEnvironment("Test"))
+            {
+                app.UseSerilogRequestLogging();
+
+            }
 
             app.UseRouting();
 

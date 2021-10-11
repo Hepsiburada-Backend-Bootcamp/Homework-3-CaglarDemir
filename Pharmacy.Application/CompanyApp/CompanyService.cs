@@ -27,8 +27,7 @@ namespace Pharmacy.Application.CompanyApp
 
         public Task Delete(int id)
         {
-            var result = _companyRepository.GetByCompanyId(id);
-
+            var result = GetCompany(id);
             return _companyRepository.Delete(result.Result);
 
         }
@@ -41,21 +40,31 @@ namespace Pharmacy.Application.CompanyApp
 
         public async Task<CompanyDto> GetById(int id)
         {
-            var result = await _companyRepository.GetByCompanyId(id);
-            if (result == null)
-            {
-                throw new ApplicationException("Firma bulunamadi!");
-            }
+            var result = await GetCompany(id);
             return result.Adapt<CompanyDto>();
 
         }
 
         public Task Update(CompanyDto companyDto)
         {
-            var result = GetById(companyDto.CompanyId);
-
+            var result = GetCompany(companyDto.CompanyId);
             return _companyRepository.Update(companyDto.Adapt<Company>());
         }
+
+
+
+
+
+        public async Task<Company> GetCompany(int id)
+        {
+            var result = await _companyRepository.GetByCompanyId(id);
+            if (result == null)
+            {
+                throw new ApplicationException("Firma bulunamadi!");
+            }
+            return result;
+        }
+
 
         //public async Task<List<CompanyDto>> Get(Expression<Func<CompanyDto, bool>> filter)
         //{

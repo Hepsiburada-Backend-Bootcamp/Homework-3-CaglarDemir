@@ -27,14 +27,14 @@ namespace PharmacyAPI.Controllers
         public IActionResult Add([FromBody] MedicineDto medicineDto)
         {
             _medicineService.Add(medicineDto);
-            return Ok(new { status = true, errors = "" });
+            return Ok();
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
             var result = await _medicineService.GetById(id);
-            return Ok(new { status = true, data = result, errors = "" });
+            return Ok(result);
 
         }
 
@@ -44,7 +44,7 @@ namespace PharmacyAPI.Controllers
         {
             medicineDto.MedicineId = id;
             _medicineService.Update(medicineDto);
-            return Ok(new { status = true, errors = "" });
+            return Ok();
 
         }
 
@@ -52,28 +52,34 @@ namespace PharmacyAPI.Controllers
         public IActionResult Delete(int id)
         {
             _medicineService.Delete(id);
-            return Ok(new { status = true, errors = "" });
+            return Ok();
 
         }
 
         [HttpGet]
-        [Route("[action]")] //  api/v1/ilaclar/List?list=Company="Y"
+        [Route("[action]")] //  api/v1/ilaclar/List?list=CompanyName="Y"
         public async Task<IActionResult> List([FromQuery] string list)
         {
             var result = await _medicineService.GetAll();
             var data = result.AsQueryable();
             data = data.FilterSource(list);
-            return Ok(new { status = true, data = data, errors = "" });
+            var dataList = data.ToList();
+            if (dataList.Count == 0)
+            {
+                return NotFound("İstenilen kriterlere uygun ilaç bulunamadı!");
+            }
+            return Ok(dataList);
         }
 
         [HttpGet]
-        [Route("[action]")] // /api/v1/ilaclar/Sort?sort=name
+        [Route("[action]")] //  api/v1/ilaclar/Sort?sort=name
         public async Task<IActionResult> Sort([FromQuery] string sort)
         {
             var result = await _medicineService.GetAll();
             var data = result.AsQueryable();
             data = data.SortSource(sort);
-            return Ok(new { status = true, data = data, errors = "" });
+
+            return Ok(data.ToList());
 
         }
 
