@@ -54,7 +54,7 @@ Delete ile kullanıldığında routerdan gelen `id`'ye sahip ilac silinir.
 ## /api/v1/ilaclar/List
 Get ile kullanıldığında bütün ilaçları databasedeki sıralamaya göre listeler.
 ## /api/v1/ilaclar/List?list={FieldAdi}="{FieldDeğeri}"
-Get ile kullanıldığında istenilen alanda istenilen değer sorgulanabilir. Örneğin `api/v1/ilaclar/List?list=Company="Y"` yapıldığında Y firmasının ilaçları listelenir.
+Get ile kullanıldığında istenilen alanda istenilen değer sorgulanabilir. Örneğin `api/v1/ilaclar/List?list=CompanyName="Y"` yapıldığında Y firmasının ilaçları listelenir.
 
 ## /api/v1/ilaclar/Sort?sort={FieldAdi}
 Get ile kullanıldığında verilen alana göre sıralanır. Örneğin `/api/v1/ilaclar/Sort?sort=name` yapıldığında bütün veriler isme göre alfabetik sıralanır.
